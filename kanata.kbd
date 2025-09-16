@@ -1,0 +1,133 @@
+(defcfg
+  process-unmapped-keys yes
+)
+
+
+(defvar
+    tap-time      150
+    hold-time     150
+)
+
+(defalias
+  ectl (tap-hold 150 150 esc lctl)
+  a (tap-hold $tap-time $hold-time a lmet)
+  s (tap-hold $tap-time $hold-time s lalt)
+  d (tap-hold $tap-time $hold-time d lsft)
+  f (tap-hold $tap-time $hold-time f lctl)
+  j (tap-hold $tap-time $hold-time j rctl)
+  k (tap-hold $tap-time $hold-time k lsft)
+  l (tap-hold $tap-time $hold-time l lalt)
+  ; (tap-hold $tap-time $hold-time ; rmet)
+
+  s1 (tap-hold $tap-time $hold-time S-, lmet)
+  s2 (tap-hold $tap-time $hold-time S-. lalt)
+  s3 (tap-hold $tap-time $hold-time [ lsft)
+  s4 (tap-hold $tap-time $hold-time ] lctl)
+
+  ;; tap: backtick (grave), hold: toggle layer-switching layer while held
+
+  ;; layer-switch changes the base layer.
+
+  ;; for switching between split and laptop keyboard
+
+  ;; based on miryoku keyboard mapping
+  esc (tap-hold  $tap-time $hold-time esc (layer-toggle symbols))
+  enter (tap-hold $tap-time $hold-time ret (layer-toggle symbols))
+  nav (tap-hold $tap-time $hold-time spc (layer-toggle nav))
+  mouse (tap-hold $tap-time $hold-time lsft (layer-toggle mouse))
+  media (tap-hold $tap-time $hold-time ret (layer-toggle media))
+  num (tap-hold $tap-time $hold-time bspc (layer-toggle num))
+  func (tap-hold $tap-time $hold-time ralt (layer-toggle func))
+
+  REDO (multi lmet lsft z)
+  UNDO (multi lmet z)
+  COPY (multi lmet c)
+  PASTE (multi lmet v)
+  CUT (multi lmet x)
+  BEFORE (multi lmet [)
+  FORWARD (multi lmet ])
+)
+
+(defsrc
+    esc     f1     f2     f3     f4     f5     f6     f7     f8     f9     f10     f11     f12
+    grv     1      2      3      4      5      6      7      8      9      0      -      =      bspc
+    tab     q      w      e      r      t      y      u      i      o      p      [      ]     \
+    caps    a      s      d      f      g      h      j      k      l      ;      '      ret
+    lsft    z      x      c      v      b      n      m      ,      .      /      rsft
+    fn      lctl    lalt   lmet             spc                    rmet   ralt   rctl
+)
+
+(deflayer base
+    grv     f1     f2     f3     f4     f5     f6     f7     f8     f9     f10     f11     f12
+    esc     1      2      3      4      5      6      7      8      9      0      -      =      bspc
+    tab     q      w      e      r      t      y      u      i      o      p      [      ]      \
+    @esc    @a     @s     @d     @f     g      h       @j     @k     @l     @;      '      @enter
+    @mouse  z      x      c      v      b      n      m      ,      .      /      ralt
+    fn      lctl   lalt  @media             @nav                  @num    @func   rctl
+)
+
+(deflayer symbols
+    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
+    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
+    tab     grv     S-grv   S-3     S-7     S-\     S-6     S-[     S-]     [       ]       _       _      _
+    caps    S-1     S--     S-;     =       S-4     S-2     S-9     S-0     S--     ;       '       ret
+    lsft    S-5     S-/     S-8     S-=     \       /       -       S-,     S-.     S-'     rsft
+    fn      lmet    lmet    lalt                    spc              @num   ralt    rctl
+)
+
+(deflayer media
+    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
+    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
+    tab     _       _       _       _       _       r       m       brdwn   bru     v       _       _      _
+    caps    lmet    lalt    lsft    lctl    _       e       prev    voldwn  volu    next    _       ret
+    lsft    _       _       _       _       _       o       0       1       2       3      rsft
+    fn      lmet    lmet    lalt                    pp             mute    ralt    rctl
+)
+
+(deflayer nav
+    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
+    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
+    tab     _       _       _       _       _       @REDO   @PASTE  @COPY   @CUT    @UNDO   _       _      _
+    caps    lmet    lalt    lsft    lctl    _       left    down    up      rght    '       caps    ret
+    lsft    _       @BEFORE @FORWARD _       _       home    pgdn    pgup    end       _      ins
+    fn      lmet    lmet    lalt                    ret             f19    del    rctl
+)
+
+
+;; ============================
+;; Func 레이어 (Kanata 형식)
+;; ============================
+(deflayer func
+    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
+    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
+    tab     f12     f7      f8      f9      _       _       _       _       _       _       _       _       _
+    caps    f11     f4      f5      f6      _       _       lmet    lalt    lsft    lctl    _       ret
+    lsft    f10     f1      f2      f3      _       _       _       _       _       _       rsft
+    fn      lmet    lmet    menu              spc           @num    ralt    rctl
+)
+
+;; ============================
+;; Num 레이어 (Kanata 형식)
+;; ============================
+(deflayer num
+    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
+    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
+    tab     [       7       8       9       S-8       _       _       _       _       _       _       _       _
+    caps    ]       4       5       6       -       _       _       _       _       _       _       ret
+    lsft    ;       1       2       3       S-=       _       _       _       _       _       rsft
+    fn      lmet    lmet    0                 =              _      ralt    rctl
+)
+
+;; ============================
+;; Mouse 레이어 (Kanata 형식)
+;; ============================
+(deflayer mouse
+    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
+    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
+    tab     _       _       _       _       _       _       @REDO   @PASTE  @COPY   @CUT    @UNDO   _       _
+    caps    lmet    lalt    lsft    lctl    _       _       _       mbck    mfwd    _       _       ret
+    lsft    _       _       _       _       _       mwl     mwd     mwu     mwr     _       rsft
+    fn      lmet    lmet    lalt            mlft             mrgt    mmid    rctl
+)
+
+
