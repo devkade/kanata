@@ -18,6 +18,7 @@
   k (tap-hold $tap-time $hold-time k lsft)
   l (tap-hold $tap-time $hold-time l lalt)
   ; (tap-hold $tap-time $hold-time ; rmet)
+  change (tap-hold $tap-time $hold-time f19 rsft)
 
   s1 (tap-hold $tap-time $hold-time S-, lmet)
   s2 (tap-hold $tap-time $hold-time S-. lalt)
@@ -38,14 +39,19 @@
   media (tap-hold $tap-time $hold-time ret (layer-toggle media))
   num (tap-hold $tap-time $hold-time bspc (layer-toggle num))
   func (tap-hold $tap-time $hold-time ralt (layer-toggle func))
+  sym (tap-hold $tap-time $hold-time bspc (layer-toggle symbols))
 
   REDO (multi lmet lsft z)
   UNDO (multi lmet z)
   COPY (multi lmet c)
   PASTE (multi lmet v)
   CUT (multi lmet x)
-  BEFORE (multi lmet [)
-  FORWARD (multi lmet ])
+  BEF (multi lmet [)
+  FWD (multi lmet ])
+  CMDTAB (multi lmet tab)
+  PTAB (multi lctl lsft tab)
+  NTAB (multi lctl tab)
+  CSATAB (multi lmet `)
 )
 
 (defsrc
@@ -61,9 +67,18 @@
     grv     f1     f2     f3     f4     f5     f6     f7     f8     f9     f10     f11     f12
     esc     1      2      3      4      5      6      7      8      9      0      -      =      bspc
     tab     q      w      e      r      t      y      u      i      o      p      [      ]      \
-    @esc    @a     @s     @d     @f     g      h       @j     @k     @l     @;      '      @enter
-    @mouse  z      x      c      v      b      n      m      ,      .      /      ralt
-    fn      lctl   lalt  @media             @nav                  @num    @func   rctl
+    @esc    @a     @s     @d     @f     g      h       @j     @k     @l     @;      '      ret
+    @change z      x      c      v      b      n      m      ,      .      /      grv
+    fn      lctl   @mouse @media             @nav                  @sym    @func   rctl
+)
+
+(deflayer nav
+    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
+    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
+    tab     _       _       _       _       _       @REDO   @PASTE  @COPY   @CUT    @UNDO   _       _      _
+    caps    lmet    lalt    lsft    lctl    @CMDTAB left    down    up      rght    '       caps    ret
+    lsft    @BEF    @FWD    @PTAB   @NTAB   @CSATAB home    pgdn    pgup    end       _      ins
+    fn      lmet    lmet    lalt                    ret             f19    del    rctl
 )
 
 (deflayer symbols
@@ -84,14 +99,6 @@
     fn      lmet    lmet    lalt                    pp             mute    ralt    rctl
 )
 
-(deflayer nav
-    grv     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12
-    esc     1       2       3       4       5       6       7       8       9       0       -       =       bspc
-    tab     _       _       _       _       _       @REDO   @PASTE  @COPY   @CUT    @UNDO   _       _      _
-    caps    lmet    lalt    lsft    lctl    _       left    down    up      rght    '       caps    ret
-    lsft    _       @BEFORE @FORWARD _       _       home    pgdn    pgup    end       _      ins
-    fn      lmet    lmet    lalt                    ret             f19    del    rctl
-)
 
 
 ;; ============================
